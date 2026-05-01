@@ -251,10 +251,11 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
       body: Column(
         children: [
           // Header
+          // Header Estilo Menu
           Stack(
             children: [
               Container(
-                height: 130,
+                height: 150,
                 width: double.infinity,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
@@ -264,38 +265,77 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
                 ),
               ),
               Container(
-                height: 130,
+                height: 150,
                 width: double.infinity,
                 color: Colors.black.withOpacity(0.3),
               ),
+              // Botón de Volver
               Positioned(
-                top: 35,
+                top: 45,
                 left: 15,
-                child: CircleAvatar(
-                  backgroundColor: Colors.white.withOpacity(0.2),
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.white),
-                    onPressed: () => Navigator.pop(context),
-                  ),
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 26),
+                  onPressed: () => Navigator.pop(context),
                 ),
               ),
-              Positioned.fill(
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: Text(
-                      'Panel de Control',
-                      style: GoogleFonts.playfairDisplay(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.2,
+              // Logo en la esquina superior izquierda (desplazado por el botón volver)
+              Positioned(
+                top: 45,
+                left: 65,
+                child: Image.network(
+                  'https://raw.githubusercontent.com/GarciaGalaviz0808/imgs/refs/heads/main/logo%20(1).png',
+                  height: 60,
+                ),
+              ),
+              // Nombre del negocio centrado
+              Container(
+                height: 150,
+                alignment: Alignment.center,
+                child: Text(
+                  'ArtStore',
+                  style: GoogleFonts.playfairDisplay(
+                    color: Colors.white,
+                    fontSize: 55,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 2.5,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withOpacity(0.5),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),
             ],
+          ),
+
+          // Recuadro Café "Panel de Control"
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 18),
+            decoration: const BoxDecoration(
+              color: Color(0xFF5D4037),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Center(
+              child: Text(
+                'Panel de Control',
+                style: GoogleFonts.playfairDisplay(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.5,
+                ),
+              ),
+            ),
           ),
 
           Expanded(

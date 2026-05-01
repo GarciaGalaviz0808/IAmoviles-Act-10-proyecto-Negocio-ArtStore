@@ -50,16 +50,36 @@ class MenuScreen extends StatelessWidget {
                   },
                 ),
               ),
-              Center(
-                child: Container(
-                  height: 300,
-                  alignment: Alignment.center,
-                  child: Hero(
-                    tag: 'logo',
-                    child: Image.network(
-                      'https://raw.githubusercontent.com/GarciaGalaviz0808/imgs/refs/heads/main/logo%20(1).png',
-                      height: 180, // Logo mucho más grande como solicitado
-                    ),
+              // Logo en la esquina superior izquierda
+              Positioned(
+                top: 40,
+                left: 20,
+                child: Hero(
+                  tag: 'logo',
+                  child: Image.network(
+                    'https://raw.githubusercontent.com/GarciaGalaviz0808/imgs/refs/heads/main/logo%20(1).png',
+                    height: 90, // Tamaño adecuado para la esquina
+                  ),
+                ),
+              ),
+              // Nombre del negocio centrado
+              Container(
+                height: 300,
+                alignment: Alignment.center,
+                child: Text(
+                  'ArtStore',
+                  style: GoogleFonts.playfairDisplay(
+                    color: Colors.white,
+                    fontSize: 70,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 3.0,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withOpacity(0.5),
+                        blurRadius: 15,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
                   ),
                 ),
               ),
