@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "577164647579",
+    "project_id": "crudtiendadearte",
+    "storage_bucket": "crudtiendadearte.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577164647579:android:605f7df6cef603c9bbfa3e",
+        "android_client_info": {
+          "package_name": "com.example.tiendadearte"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2-WxL_F658N1Cy_pflYXO_p3qSTuUKPw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
