@@ -55,13 +55,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   Image.network(
                     'https://raw.githubusercontent.com/GarciaGalaviz0808/imgs/refs/heads/main/logo%20(1).png',
-                    height: 180,
+                    height: MediaQuery.of(context).size.height < 700 ? 120 : 180,
                   ),
                   const SizedBox(height: 10),
                   Text(
                     'ADMINISTRADORES',
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.playfairDisplay(
-                      fontSize: 28,
+                      fontSize: MediaQuery.of(context).size.width < 600 ? 24 : 28,
                       fontWeight: FontWeight.bold,
                       color: const Color(0xFF3E2723),
                       letterSpacing: 2.0,
@@ -70,13 +71,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 8),
                   Text(
                     'Gestión de Tienda',
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.montserrat(
                       fontSize: 14,
                       color: const Color(0xFF8D6E63),
                       letterSpacing: 1.5,
                     ),
                   ),
-                  const SizedBox(height: 48),
+                  SizedBox(height: MediaQuery.of(context).size.height < 700 ? 24 : 48),
                   TextFormField(
                     controller: _emailController,
                     decoration: const InputDecoration(
@@ -101,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 40),
+                  SizedBox(height: MediaQuery.of(context).size.height < 700 ? 24 : 40),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(

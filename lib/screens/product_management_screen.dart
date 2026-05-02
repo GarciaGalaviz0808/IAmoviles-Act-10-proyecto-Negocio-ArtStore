@@ -203,37 +203,38 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
     );
   }
 
-  Widget _buildSummaryCard(String title, String value, IconData icon, Color color) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 5))],
-        ),
-        child: Row(
-          children: [
-            CircleAvatar(
-              backgroundColor: color.withOpacity(0.1),
-              radius: 16,
-              child: Icon(icon, color: color, size: 16),
+  Widget _buildSummaryCard(String title, String value, IconData icon, Color color, BuildContext context) {
+    bool isSmallScreen = MediaQuery.of(context).size.width < 600;
+    return Container(
+      padding: EdgeInsets.all(isSmallScreen ? 8 : 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 5))],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CircleAvatar(
+            backgroundColor: color.withOpacity(0.1),
+            radius: isSmallScreen ? 14 : 16,
+            child: Icon(icon, color: color, size: isSmallScreen ? 14 : 16),
+          ),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(title, style: GoogleFonts.montserrat(fontSize: isSmallScreen ? 7 : 8, color: Colors.grey, fontWeight: FontWeight.bold)),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(value, style: GoogleFonts.montserrat(fontSize: isSmallScreen ? 10 : 12, fontWeight: FontWeight.bold, color: const Color(0xFF3E2723))),
+                ),
+              ],
             ),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: GoogleFonts.montserrat(fontSize: 8, color: Colors.grey, fontWeight: FontWeight.bold)),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(value, style: GoogleFonts.montserrat(fontSize: 12, fontWeight: FontWeight.bold, color: const Color(0xFF3E2723))),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
@@ -252,63 +253,69 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
         children: [
           // Header
           // Header Estilo Menu
-          Stack(
-            children: [
-              Container(
-                height: 150,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('https://raw.githubusercontent.com/GarciaGalaviz0808/imgs/refs/heads/main/header.PNG'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              Container(
-                height: 150,
-                width: double.infinity,
-                color: Colors.black.withOpacity(0.3),
-              ),
-              // Botón de Volver
-              Positioned(
-                top: 45,
-                left: 15,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 26),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ),
-              // Logo en la esquina superior izquierda (desplazado por el botón volver)
-              Positioned(
-                top: 45,
-                left: 65,
-                child: Image.network(
-                  'https://raw.githubusercontent.com/GarciaGalaviz0808/imgs/refs/heads/main/logo%20(1).png',
-                  height: 60,
-                ),
-              ),
-              // Nombre del negocio centrado
-              Container(
-                height: 150,
-                alignment: Alignment.center,
-                child: Text(
-                  'ArtStore',
-                  style: GoogleFonts.playfairDisplay(
-                    color: Colors.white,
-                    fontSize: 55,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 2.5,
-                    shadows: [
-                      Shadow(
-                        color: Colors.black.withOpacity(0.5),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              double screenWidth = constraints.maxWidth;
+              bool isMobile = screenWidth < 600;
+              return Stack(
+                children: [
+                  Container(
+                    height: isMobile ? 120 : 150,
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage('https://raw.githubusercontent.com/GarciaGalaviz0808/imgs/refs/heads/main/header.PNG'),
+                        fit: BoxFit.cover,
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            ],
+                  Container(
+                    height: isMobile ? 120 : 150,
+                    width: double.infinity,
+                    color: Colors.black.withOpacity(0.3),
+                  ),
+                  // Botón de Volver
+                  Positioned(
+                    top: isMobile ? 35 : 45,
+                    left: 10,
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: isMobile ? 22 : 26),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
+                  // Logo en la esquina superior izquierda (desplazado por el botón volver)
+                  Positioned(
+                    top: isMobile ? 35 : 45,
+                    left: isMobile ? 50 : 65,
+                    child: Image.network(
+                      'https://raw.githubusercontent.com/GarciaGalaviz0808/imgs/refs/heads/main/logo%20(1).png',
+                      height: isMobile ? 45 : 60,
+                    ),
+                  ),
+                  // Nombre del negocio centrado
+                  Container(
+                    height: isMobile ? 120 : 150,
+                    alignment: Alignment.center,
+                    child: Text(
+                      'ArtStore',
+                      style: GoogleFonts.playfairDisplay(
+                        color: Colors.white,
+                        fontSize: isMobile ? 40 : 55,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: isMobile ? 1.5 : 2.5,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black.withOpacity(0.5),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
 
           // Recuadro Café "Panel de Control"
@@ -355,55 +362,91 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
                       constraints: const BoxConstraints(maxWidth: 850),
                       child: Column(
                         children: [
-                          Row(
-                            children: [
-                              _buildSummaryCard('Total Productos', products.length.toString(), Icons.inventory_2_outlined, const Color(0xFF5D4037)),
-                              const SizedBox(width: 8),
-                              _buildSummaryCard('Alertas Stock', lowStock.toString(), Icons.warning_amber_rounded, Colors.orange),
-                              const SizedBox(width: 8),
-                              _buildSummaryCard('Valor Total', '\$${_formatCurrency(totalValue)}', Icons.payments_outlined, Colors.green),
-                            ],
+                          LayoutBuilder(
+                            builder: (context, constraints) {
+                              bool isSmall = constraints.maxWidth < 500;
+                              return Wrap(
+                                spacing: 8,
+                                runSpacing: 8,
+                                children: [
+                                  SizedBox(
+                                    width: isSmall ? (constraints.maxWidth - 8) / 2 : (constraints.maxWidth - 16) / 3,
+                                    child: _buildSummaryCard('Total Productos', products.length.toString(), Icons.inventory_2_outlined, const Color(0xFF5D4037), context),
+                                  ),
+                                  SizedBox(
+                                    width: isSmall ? (constraints.maxWidth - 8) / 2 : (constraints.maxWidth - 16) / 3,
+                                    child: _buildSummaryCard('Alertas Stock', lowStock.toString(), Icons.warning_amber_rounded, Colors.orange, context),
+                                  ),
+                                  SizedBox(
+                                    width: isSmall ? constraints.maxWidth : (constraints.maxWidth - 16) / 3,
+                                    child: _buildSummaryCard('Valor Total', '\$${_formatCurrency(totalValue)}', Icons.payments_outlined, Colors.green, context),
+                                  ),
+                                ],
+                              );
+                            },
                           ),
                           const SizedBox(height: 20),
 
                           Container(
+                            clipBehavior: Clip.antiAlias, // Asegura que el contenido respete los bordes redondeados
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(20),
                               boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 20, offset: const Offset(0, 10))],
                             ),
-                            child: Column(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xFF3E2723),
-                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      const Icon(Icons.art_track, color: Colors.white70, size: 20),
-                                      const SizedBox(width: 8),
-                                      Text('Inventario de Suministros', style: GoogleFonts.montserrat(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
-                                      const Spacer(),
-                                      ElevatedButton.icon(
-                                        onPressed: () => _showProductDialog(),
-                                        icon: const Icon(Icons.add_circle_outline, size: 16),
-                                        label: const Text('Agregar Producto', style: TextStyle(fontSize: 12)),
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: const Color(0xFF3E2723),
-                                          foregroundColor: Colors.white,
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                                        ),
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: IntrinsicWidth(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xFF3E2723),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                                
-                                SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: DataTable(
+                                      child: Builder(
+                                        builder: (context) {
+                                          bool isHeaderCramped = MediaQuery.of(context).size.width < 500;
+                                          return Wrap(
+                                            alignment: WrapAlignment.spaceBetween,
+                                            crossAxisAlignment: WrapCrossAlignment.center,
+                                            spacing: 10,
+                                            runSpacing: 10,
+                                            children: [
+                                              Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  const Icon(Icons.art_track, color: Colors.white70, size: 20),
+                                                  const SizedBox(width: 8),
+                                                  Text(
+                                                    'Inventario de Suministros', 
+                                                    style: GoogleFonts.montserrat(
+                                                      color: Colors.white, 
+                                                      fontWeight: FontWeight.bold, 
+                                                      fontSize: isHeaderCramped ? 12 : 14
+                                                    )
+                                                  ),
+                                                ],
+                                              ),
+                                              ElevatedButton.icon(
+                                                onPressed: () => _showProductDialog(),
+                                                icon: const Icon(Icons.add_circle_outline, size: 16),
+                                                label: const Text('Agregar Producto', style: TextStyle(fontSize: 12)),
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: const Color(0xFF5D4037),
+                                                  foregroundColor: Colors.white,
+                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    
+                                    DataTable(
                                     columnSpacing: 25,
                                     columns: [
                                       DataColumn(label: Text('Nombre', style: GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 12))),
@@ -459,10 +502,11 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
                                         ],
                                       );
                                     }).toList(),
-                                  ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                  ],
                                 ),
-                                const SizedBox(height: 10),
-                              ],
+                              ),
                             ),
                           ),
                         ],
